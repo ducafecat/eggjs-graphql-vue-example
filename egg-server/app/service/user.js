@@ -22,15 +22,6 @@ class UserService extends Service {
     })
     return user
   }
-  /* query
-  {
-    user(username: "hans", password: "345457yftgyhdsfghre") {
-      id
-      name
-      token
-    }
-  }
-  */
 }
 
 module.exports = UserService
