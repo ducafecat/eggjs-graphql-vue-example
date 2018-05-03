@@ -20,6 +20,11 @@ class UserConnector {
     return this.loader.load(id)
   }
 
+  // 用户登录
+  fetchByNamePassword(username, password) {
+    let user = this.ctx.service.user.findByUsernamePassword(username, password)
+    return user
+  }
 }
 
 module.exports = UserConnector

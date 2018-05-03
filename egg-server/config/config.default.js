@@ -20,6 +20,12 @@ module.exports = appInfo => {
   config.baseURL =
     'https://www.easy-mock.com/mock/59801fd8a1d30433d84f198c/example'
 
+  // jwt
+  config.jwt = {
+    jwtSecret: 'shared-secret',
+    jwtExpire: '14 days'
+  }
+
   // graphql
   config.graphql = {
     router: '/graphql',

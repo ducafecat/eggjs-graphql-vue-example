@@ -1,5 +1,10 @@
+# 用户
 type User {
+  # 流水号
   id: ID!
+  # 用户名
   name: String!
+  # token
+  token: String
   # items: [Item!]
 }

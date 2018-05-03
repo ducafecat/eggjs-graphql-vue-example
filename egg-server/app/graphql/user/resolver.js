@@ -2,8 +2,8 @@
 
 module.exports = {
   Query: {
-    user(root, { id }, ctx) {
-      return ctx.connector.user.fetchById(id);
+    user(root, { username, password }, ctx) {
+      return ctx.connector.user.fetchByNamePassword(username, password);
     },
   },
 };

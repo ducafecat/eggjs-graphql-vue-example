@@ -1,4 +1,4 @@
-type Mutation {
+# type Mutation {
 
   # User
 
@@ -10,4 +10,4 @@ type Mutation {
   # Tag
   # attachTag (itemID: ID!, tag: String!): Tag 
   # removeTag (id: ID!): Tag 
-}
+# }
