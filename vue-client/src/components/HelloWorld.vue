@@ -5,8 +5,9 @@
         <span>调试面板</span>
       </div>
       <el-button type="primary" @click="handleLogin">用户登录</el-button>
-      <el-button type="primary">查询产品</el-button>
-      <el-button type="primary">添加产品</el-button>
+      <el-button type="primary" @click="handleUserAll">用户列表</el-button>
+      <el-button type="primary" @click="handleRemoveUser">用户删除</el-button>
+      <el-button type="danger" @click="handleClear">清除Token</el-button>
 
       <div class="debug info" v-if="req !== ''">
         {{req}}
@@ -23,7 +24,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import QUERY_USER from '@/graphql/user.graphql'
+import QUERY_USERS from '@/graphql/users.graphql'
+import MUTATION_REMOVE_USER from '@/graphql/removeUser.graphql'
+import Config from '@/utils/config.json'
+
 export default {
   name: 'graphql-vue',
   data() {
@@ -31,43 +36,78 @@ export default {
       loading: false,
       req: '',
       res: '',
-      err: '',
+      err: ''
     }
   },
   methods: {
-    handleLogin() {
+    clearData() {
       this.loading = true
+      this.req = ''
+      this.res = ''
+      this.err = ''
+    },
+    handleLogin() {
+      this.clearData()
       this.$apollo
         .query({
           // Query
-          query: gql`
-            query queryFun($username: String!, $password: String!) {
-              user(username: $username, password: $password) {
-                id
-                name
-                token
-              }
-            }
-          `,
+          query: QUERY_USER,
           variables: {
             username: 'ducafecat',
             password: '12321321321321432'
           },
-          loadingKey: 'loading'
         })
         .then(response => {
           this.loading = false
           this.res = response.data
-          console.log('data => ', response)
+          localStorage.setItem(Config.tokenName, this.res.user.token)
+          alert('登录成功，写入Token完成，重新装载 apolloProvider')
+          window.location.reload()
         })
         .catch(error => {
           this.loading = false
           this.err = error
-          console.error('error => ', error)
         })
     },
-    handleLogin2() {
-      this.$apollo.queries.login
+    handleUserAll() {
+      this.clearData()
+      this.$apollo
+        .query({
+          // Query
+          query: QUERY_USERS,
+        })
+        .then(response => {
+          this.loading = false
+          this.res = response.data
+        })
+        .catch(error => {
+          this.loading = false
+          this.err = error
+        })
+    },
+    handleRemoveUser() {
+      this.clearData()
+      this.$apollo
+        .mutate({
+          // Query
+          mutation: MUTATION_REMOVE_USER,
+          variables: {
+            id: 123
+          }
+        })
+        .then(response => {
+          this.loading = false
+          this.res = response.data
+        })
+        .catch(error => {
+          this.loading = false
+          this.err = error
+        })
+    },
+    handleClear() {
+      localStorage.removeItem(Config.tokenName)
+      alert('清除Token完成，重新装载 apolloProvider')
+      window.location.reload()
     }
   },
   apollo: {
