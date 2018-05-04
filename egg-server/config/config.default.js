@@ -23,7 +23,8 @@ module.exports = appInfo => {
   // jwt
   config.jwt = {
     jwtSecret: 'shared-secret',
-    jwtExpire: '14 days'
+    jwtExpire: '14 days',
+    WhiteList: ['UserLogin']
   }
 
   // graphql
@@ -34,7 +35,7 @@ module.exports = appInfo => {
     // 是否加载到 agent 上，默认关闭
     agent: false,
     // 是否加载开发者工具 graphiql, 默认开启。路由同 router 字段。使用浏览器打开该可见。
-    graphiql: true,
+    graphiql: true
     // graphQL 路由前的拦截器
     // onPreGraphQL: function(ctx) {
     //   console.log(ctx)
@@ -51,6 +52,12 @@ module.exports = appInfo => {
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  }
+
+  // bodyParser
+  config.bodyParser = {
+    enable: true,
+    jsonLimit: '10mb'
   }
 
   return config

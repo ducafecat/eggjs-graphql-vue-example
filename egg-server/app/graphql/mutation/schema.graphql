@@ -1,6 +1,10 @@
-# type Mutation {
+type Mutation {
 
   # User
+  # 删除用户
+  removeUser (
+    # 用户ID
+    id: ID!): User
 
   # Item
   # createItem (userID: ID!, content: String!, expire: Date): Item
@@ -10,4 +14,4 @@
   # Tag
   # attachTag (itemID: ID!, tag: String!): Tag 
   # removeTag (id: ID!): Tag 
-# }
+}

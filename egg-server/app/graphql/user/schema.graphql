@@ -6,5 +6,4 @@ type User {
   name: String!
   # token
   token: String
-  # items: [Item!]
 }

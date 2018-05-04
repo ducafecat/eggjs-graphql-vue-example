@@ -25,6 +25,19 @@ class UserConnector {
     let user = this.ctx.service.user.findByUsernamePassword(username, password)
     return user
   }
+
+  // 用户列表
+  fetchAll() {
+    let user = this.ctx.service.user.findAll()
+    return user
+  }
+
+  // 用户删除
+  removeOne(id) {
+    let user = this.ctx.service.user.removeUser(id)
+    return user
+  }
+
 }
 
 module.exports = UserConnector
