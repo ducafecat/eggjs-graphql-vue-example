@@ -9,6 +9,8 @@
       <el-button type="primary" @click="handleRemoveUser">用户删除</el-button>
       <el-button type="danger" @click="handleClear">清除Token</el-button>
 
+      <el-alert v-if="token !== null" :title="{token}" type="success" :closable="false" class="alert"></el-alert>
+
       <div class="debug info" v-if="req !== ''">
         {{req}}
       </div>
@@ -36,8 +38,12 @@ export default {
       loading: false,
       req: '',
       res: '',
-      err: ''
+      err: '',
+      token: null
     }
+  },
+  created() {
+    this.token = localStorage.getItem(Config.tokenName) || null
   },
   methods: {
     clearData() {
@@ -61,8 +67,7 @@ export default {
           this.loading = false
           this.res = response.data
           localStorage.setItem(Config.tokenName, this.res.user.token)
-          alert('登录成功，写入Token完成，重新装载 apolloProvider')
-          window.location.reload()
+          this.token = this.res.user.token
         })
         .catch(error => {
           this.loading = false
@@ -106,8 +111,7 @@ export default {
     },
     handleClear() {
       localStorage.removeItem(Config.tokenName)
-      alert('清除Token完成，重新装载 apolloProvider')
-      window.location.reload()
+      this.token = null
     }
   },
   apollo: {
@@ -155,5 +159,9 @@ export default {
 .err {
   background-color: rgb(248, 51, 2);
   color: #fff;
+}
+.alert {
+  margin: 5px;
+  word-wrap: break-word;
 }
 </style>

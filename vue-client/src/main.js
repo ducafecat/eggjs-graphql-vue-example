@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import apolloProvider from './apolloProvider'
+import apolloProvider from '@/apolloProvider'
 
 Vue.use(ElementUI)
 

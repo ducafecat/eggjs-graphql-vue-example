@@ -13,8 +13,8 @@ const httpLink = new HttpLink({
   uri: Config.graphqlServer,
 })
 
-const token = localStorage.getItem(Config.tokenName) || null
 const authMiddleware = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem(Config.tokenName) || null
   operation.setContext({
     headers: {
       Authorization: `Bearer ${token}`
